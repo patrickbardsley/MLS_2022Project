@@ -15,4 +15,4 @@ scatter = alt.Chart(df, title=f"Correlation between {x_val} and {y_val}").mark_p
     tooltip=[x_val,y_val]).configure(background='#D9E9F0')
 st.altair_chart(scatter, use_container_width=True)
 
-st.dataframe(df)
+#st.dataframe(df)
