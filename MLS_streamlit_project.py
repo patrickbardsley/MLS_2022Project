@@ -4,6 +4,7 @@ import altair as alt
 import numpy as np
 
 st.header('2022 MLS Season Visualisations')
+
 #Import the data set
 df = pd.read_csv('MLS_performance_data_22_experiment.csv', encoding='latin-1') 
 
