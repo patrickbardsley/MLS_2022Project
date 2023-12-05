@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 import numpy as np
-import seaborn as sns
+#import seaborn as sns
 
 st.title('2022 MLS Season Visualisations')
 
