@@ -11,6 +11,9 @@ df = pd.read_csv('MLS_performance_data_22_experiment.csv', encoding='latin-1')
 
 df.drop(['Season'], axis=1)
 
+mls_player = st.multiselect('Select MLS players to compare to each other', df['Player'])
+player_stats = df[df['Player'].isin(mls_player)]
+
 x_val = st.sidebar.selectbox("Pick your x-axis", df.select_dtypes(include=np.number).columns.tolist())
 y_val = st.sidebar.selectbox("Pick your y-axis", df.select_dtypes(include=np.number).columns.tolist())
 
