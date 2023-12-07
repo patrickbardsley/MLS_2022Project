@@ -9,7 +9,7 @@ st.title('2022 MLS Season Visualisations')
 #Import the data set
 df = pd.read_csv('MLS_performance_data_22_experiment.csv', encoding='latin-1') 
 
-df.drop(['Season'])
+df.drop(['Season'], axis=1)
 
 x_val = st.sidebar.selectbox("Pick your x-axis", df.select_dtypes(include=np.number).columns.tolist())
 y_val = st.sidebar.selectbox("Pick your y-axis", df.select_dtypes(include=np.number).columns.tolist())
