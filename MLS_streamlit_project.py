@@ -42,16 +42,32 @@ with tab2:
 with tab3:
     import plotly.graph_objects as go
     metrics = ['xG per 90', 'xA per 90', 'Smart passes per 90', 'Key passes per 90', 'Shot assists per 90', 'Goals per 90', 'Touches in box per 90', 'Assists per 90']
+    xG_per_90 = df[df['xG per 90'].isin(mls_player)]
+    smart_passes_per_90 = df[df['Smart passes per 90'].isin(mls_player)]
+    key_passes_per_90 = df[df['Key passes per 90'].isin(mls_player)]
+    shot_assists_per_90 = df[df['Shot assists per 90'].isin(mls_player)]
+    goals_per_90 = df[df['Goals per 90'].isin(mls_player)]
+    touches_in_box_per_90 = df[df['Touches in box per 90'].isin(mls_player)]
+    assists_per_90 = df[df['Assists per 90'].isin(mls_player)]
+    radar_chart_info = [xG_per_90, smart_passes_per_90, key_passes_per_90, shot_assists_per_90, goals_per_90, touches_in_box_per_90, assists_per_90]
 
     fig = go.Figure()
 
     fig.add_trace(go.Scatterpolar(
-         r = df,
+         r = [xG_per_90, smart_passes_per_90, key_passes_per_90, shot_assists_per_90, goals_per_90, touches_in_box_per_90, assists_per_90],
          theta = metrics,
          fill = 'toself',
          name = 'Player A'
     ))
+    fig.update_layout(
+        polar=dict(
+            radialaxis=dict(
+                visible=True
+            ),
+        ),
+        showlegend=False
+    )
    
-    #fig = px.line_polar(player_stats, r=df, theta = metrics, line_close=True)
+    #fig = px.line_polar(player_stats, r=radar_chart_info, theta = metrics, line_close=True)
     st.plotly_chart(fig, use_container_width=True)
 #st.dataframe(df)
