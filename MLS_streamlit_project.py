@@ -18,7 +18,7 @@ player_stats = df[df['Player'].isin(mls_player)]
 x_val = st.sidebar.selectbox("Pick your x-axis", df.select_dtypes(include=np.number).columns.tolist())
 y_val = st.sidebar.selectbox("Pick your y-axis", df.select_dtypes(include=np.number).columns.tolist())
 
-tab1, tab2, tab3 = st.tabs(['Scatter Plot', 'Bar Chart'])
+tab1, tab2 = st.tabs(['Scatter Plot', 'Bar Chart'])
 
 with tab1:
     scatter = alt.Chart(player_stats, title=f"{x_val} and {y_val}").mark_point().encode(
