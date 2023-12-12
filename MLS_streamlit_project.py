@@ -4,12 +4,16 @@ import altair as alt
 import numpy as np
 #import seaborn as sns
 
-st.title('2022 MLS Season Player Data - Visualised')
 
-st.markdown("**Statistics for every MLS player that played during the 2022 MLS Season.**")
 
 #Import the data set
 df = pd.read_csv('MLS_performance_data_22_experiment.csv', encoding='latin-1') 
+
+st.set_page_config(layout="wide")
+
+st.title('2022 MLS Season Player Data - Visualised')
+
+st.markdown("**Statistics for every MLS player that played during the 2022 MLS Season.**")
 
 df.drop(['xG', 'xA'], axis=1)
 
