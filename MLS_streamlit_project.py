@@ -4,7 +4,7 @@ import altair as alt
 import numpy as np
 #import seaborn as sns
 
-st.title('2022 MLS Season Visualisations')
+st.title('2022 MLS Season Player Data - Visualised')
 
 st.markdown("**Statistics for every MLS player that played during the 2022 MLS Season.**")
 
