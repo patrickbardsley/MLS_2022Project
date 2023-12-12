@@ -6,6 +6,8 @@ import numpy as np
 
 st.title('2022 MLS Season Visualisations')
 
+st.markdown("**Statistics for every MLS player that played during the 2022 MLS Season.**")
+
 #Import the data set
 df = pd.read_csv('MLS_performance_data_22_experiment.csv', encoding='latin-1') 
 
