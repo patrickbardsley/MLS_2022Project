@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 import numpy as np
-import plotly.express as px
+#import plotly.express as px
 #import seaborn as sns
 
 st.title('2022 MLS Season Visualisations')
@@ -10,15 +10,16 @@ st.title('2022 MLS Season Visualisations')
 #Import the data set
 df = pd.read_csv('MLS_performance_data_22_experiment.csv', encoding='latin-1') 
 
-df.drop(['Season','Age (as of 03-20-2023)'], axis=1)
+df.drop(['xG', 'xA'], axis=1)
+
+st.sidebar.header("Pick two player metrics for your charts: ")
+x_val = st.sidebar.selectbox("Pick your x-axis", df.select_dtypes(include=np.number).columns.tolist())
+y_val = st.sidebar.selectbox("Pick your y-axis", df.select_dtypes(include=np.number).columns.tolist())
 
 mls_player = st.multiselect('Select MLS players to compare to each other', df['Player'])
 player_stats = df[df['Player'].isin(mls_player)]
 
-x_val = st.sidebar.selectbox("Pick your x-axis", df.select_dtypes(include=np.number).columns.tolist())
-y_val = st.sidebar.selectbox("Pick your y-axis", df.select_dtypes(include=np.number).columns.tolist())
-
-tab1, tab2 = st.tabs(['Scatter Plot', 'Bar Chart'])
+tab1, tab2, tab3 = st.tabs(['Scatter Plot', 'Bar Chart', 'Heatmap'])
 
 with tab1:
     scatter = alt.Chart(player_stats, title=f"{x_val} and {y_val}").mark_point().encode(
@@ -26,18 +27,26 @@ with tab1:
         alt.Y(y_val,title=f"{y_val}"),
         color = alt.Color('Player', scale=alt.Scale(scheme='darkmulti')),
         #opacity = 50,
-        tooltip=[x_val,y_val,'Player']).configure(background='#D9E9F0')
+        size=alt.Size('Player', scale=alt.Scale(range=[100, 500])),
+        tooltip=[x_val,y_val,'Player','Position']).configure(background='#D9E9F0')
     st.altair_chart(scatter, use_container_width=True)
 
-
 with tab2:
-    bar = alt.Chart(player_stats, title=f"{x_val} and {y_val}").mark_bar().encode(
+    bar = alt.Chart(player_stats, title=f"{x_val} and {y_val}").mark_bar(size=20).encode(
     alt.X(x_val,title=f"{x_val}"),
     alt.Y(y_val,title=f"{y_val}"),
     color = alt.Color('Player', scale=alt.Scale(scheme='darkmulti')),
     #opacity = 50,
     tooltip=[x_val,y_val,'Player']).configure(background='#D9E9F0')
     st.altair_chart(bar, use_container_width=True)
+
+with tab3:
+    heatmap = alt.Chart(player_stats).mark_rect().encode(
+        alt.X(x_val).bin(maxbins=50),
+        alt.Y(y_val).bin(maxbins=30),
+        alt.Color('Player').scale(scheme='darkmulti')
+    )
+    st.altair_chart(heatmap, use_container_width=True)
 
 # with tab3:
 #     import plotly.graph_objects as go
