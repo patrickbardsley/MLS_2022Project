@@ -24,6 +24,7 @@ y_val = st.sidebar.selectbox("Pick your y-axis", df.select_dtypes(include=np.num
 mls_player = st.multiselect('Select MLS players to compare to each other', df['Player'])
 player_stats = df[df['Player'].isin(mls_player)]
 
+
 tab1, tab2, tab3 = st.tabs(['Scatter Plot', 'Bar Chart', 'Heatmap'])
 
 with tab1:
@@ -47,10 +48,10 @@ with tab2:
 
 with tab3:
     heatmap = alt.Chart(player_stats).mark_rect().encode(
-        alt.X(x_val).bin(maxbins=50),
+        alt.X(x_val).bin(maxbins=7),
         alt.Y(y_val).bin(maxbins=30),
         alt.Color('Player').scale(scheme='darkmulti')
-    )
+    ).configure(background='#D9E9F0')
     st.altair_chart(heatmap, use_container_width=True)
 
 # with tab3:
