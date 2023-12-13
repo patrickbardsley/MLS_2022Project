@@ -15,14 +15,16 @@ st.markdown("**Statistics for every MLS player that played during the 2022 MLS S
 st.sidebar.header("Pick two player metrics for your charts: ")
 x_val = st.sidebar.selectbox("Pick your x-axis", df.select_dtypes(include=np.number).columns.tolist())
 y_val = st.sidebar.selectbox("Pick your y-axis", df.select_dtypes(include=np.number).columns.tolist())
+#position_box = st.sidebar.selectbox('Select a particular position', df['Position'].drop_duplicates())
 #min_matches_played = df['Matches played']
-#min_matches_played_display = st.sidebar.number_input("Enter a value between 1 and 38 to determine the mimimum number of matches played in order to be displayed", min_value=1, max_value=len)
+#min_matches_played_display = st.sidebar.number_input("Enter a value between 1 and 38 to determine the mimimum number of matches played in order to be displayed", min_value=1, max_value=len(min_matches_played), value=20,step=1)
 
 mls_player = st.multiselect('Select MLS players to compare to each other', df['Player'])
 all_options = st.checkbox("Select all options")
 if all_options:
     mls_player = df['Player']
 player_stats = df[df['Player'].isin(mls_player)]
+#position = df[df['Position'].isin(mls_player)]
 
 
 tab1, tab2, tab3 = st.tabs(['Scatter Plot', 'Bar Chart', 'Heatmap'])
@@ -47,9 +49,9 @@ with tab2:
     st.altair_chart(bar, use_container_width=True)
 
 with tab3:
-    heatmap = alt.Chart(player_stats).mark_rect().encode(
-        alt.X(x_val).bin(maxbins=10),
-        alt.Y(y_val).bin(maxbins=10),
+    heatmap = alt.Chart(player_stats, title=f"{x_val} and {y_val}").mark_rect().encode(
+        alt.X(x_val,title=f"{x_val}").bin(maxbins=10),
+        alt.Y(y_val,title=f"{y_val}").bin(maxbins=10),
         alt.Color('Player').scale(scheme='darkmulti')
     ).configure(background='#D9E9F0')
     st.altair_chart(heatmap, use_container_width=True)
