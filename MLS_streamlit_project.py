@@ -15,16 +15,19 @@ st.markdown("**Statistics for every MLS player that played during the 2022 MLS S
 st.sidebar.header("Pick two player metrics for your charts: ")
 x_val = st.sidebar.selectbox("Pick your x-axis", df.select_dtypes(include=np.number).columns.tolist())
 y_val = st.sidebar.selectbox("Pick your y-axis", df.select_dtypes(include=np.number).columns.tolist())
-#position_box = st.sidebar.selectbox('Select a particular position', df['Position'].drop_duplicates())
-#min_matches_played = df['Matches played']
-#min_matches_played_display = st.sidebar.number_input("Enter a value between 1 and 38 to determine the mimimum number of matches played in order to be displayed", min_value=1, max_value=len(min_matches_played), value=20,step=1)
+
 
 mls_player = st.multiselect('Select MLS players to compare to each other', df['Player'])
-all_options = st.checkbox("Select all options")
+all_options = st.checkbox("Select all players")
 if all_options:
     mls_player = df['Player']
 player_stats = df[df['Player'].isin(mls_player)]
-#position = df[df['Position'].isin(mls_player)]
+
+
+#position_box = st.sidebar.selectbox('Select a particular position', df['Position'].drop_duplicates())
+#position = df[df['Position']==(position_box)]
+#min_matches_played = df['Matches played']
+#min_matches_played_display = st.sidebar.number_input("Enter a value between 1 and 38 to determine the mimimum number of matches played in order to be displayed", min_value=1, max_value=len(min_matches_played), value=20,step=1)
 
 
 tab1, tab2, tab3 = st.tabs(['Scatter Plot', 'Bar Chart', 'Heatmap'])
@@ -34,7 +37,6 @@ with tab1:
         alt.X(x_val,title=f"{x_val}"),
         alt.Y(y_val,title=f"{y_val}"),
         color = alt.Color('Player', scale=alt.Scale(scheme='darkmulti')),
-        #opacity = 50,
         size=alt.Size('Player', scale=alt.Scale(range=[100, 500])),
         tooltip=[x_val,y_val,'Player','Position']).configure(background='#D9E9F0')
     st.altair_chart(scatter, use_container_width=True)
@@ -44,7 +46,6 @@ with tab2:
     alt.X(x_val,title=f"{x_val}"),
     alt.Y(y_val,title=f"{y_val}"),
     color = alt.Color('Player', scale=alt.Scale(scheme='darkmulti')),
-    #opacity = 50,
     tooltip=[x_val,y_val,'Player','Position']).configure(background='#D9E9F0')
     st.altair_chart(bar, use_container_width=True)
 
