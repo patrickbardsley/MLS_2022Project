@@ -15,6 +15,7 @@ st.markdown("**Statistics for every MLS player that played during the 2022 MLS S
 st.sidebar.header("Pick two player metrics for your charts: ")
 x_val = st.sidebar.selectbox("Pick your x-axis", df.select_dtypes(include=np.number).columns.tolist())
 y_val = st.sidebar.selectbox("Pick your y-axis", df.select_dtypes(include=np.number).columns.tolist())
+#matches = st.sidebar.number_input("Minimum Matches Played", 5, max(df['Matches played'].astype(int)),15)
 
 
 mls_player = st.multiselect('Select MLS players to compare to each other', df['Player'])
@@ -38,7 +39,7 @@ with tab1:
         alt.Y(y_val,title=f"{y_val}"),
         color = alt.Color('Player', scale=alt.Scale(scheme='darkmulti')),
         size=alt.Size('Player', scale=alt.Scale(range=[100, 500])),
-        tooltip=[x_val,y_val,'Player','Position']).configure(background='#D9E9F0')
+        tooltip=[x_val,y_val,'Player','Position', 'Matches played']).configure(background='#D9E9F0')
     st.altair_chart(scatter, use_container_width=True)
 
 with tab2:
@@ -46,13 +47,14 @@ with tab2:
     alt.X(x_val,title=f"{x_val}"),
     alt.Y(y_val,title=f"{y_val}"),
     color = alt.Color('Player', scale=alt.Scale(scheme='darkmulti')),
-    tooltip=[x_val,y_val,'Player','Position']).configure(background='#D9E9F0')
+    tooltip=[x_val,y_val,'Player','Position', 'Matches played']).configure(background='#D9E9F0')
     st.altair_chart(bar, use_container_width=True)
 
 with tab3:
     heatmap = alt.Chart(player_stats, title=f"{x_val} and {y_val}").mark_rect().encode(
         alt.X(x_val,title=f"{x_val}").bin(maxbins=10),
         alt.Y(y_val,title=f"{y_val}").bin(maxbins=10),
-        alt.Color('Player').scale(scheme='darkmulti')
+        alt.Color('Player').scale(scheme='darkmulti'),
+        tooltip=[x_val,y_val,'Player','Position', 'Matches played']
     ).configure(background='#D9E9F0')
     st.altair_chart(heatmap, use_container_width=True)
