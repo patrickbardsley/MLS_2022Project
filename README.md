@@ -10,4 +10,4 @@ The purpose of this website is to allow virtually anyone involved with MLS to se
 Almost every MLS player statistic from the 2022 season is in this database. All stats are from the MLS and Wyscout, a platform used to get player/team statistics on almost every league in the world. 
 
 # Future work:
-In the future, I would like to incorporate more filters to see who are the top players in each position. 
+In the future, I would like to incorporate more filters to see who are the top players in each position and have a filter on how many matches they played, in addition to getting more recent data such as the 2023 season (which - at the time of writing - just concluded, with Columbus Crew winning the MLS Cup). I would also like to add more types of charts such as radar charts to create more beautiful and visually appealing graphs that can also tell a story.
